@@ -1,0 +1,57 @@
+#include<cstdio>
+#include<vector>
+
+using namespace std;
+
+typedef vector<int> vi;
+
+class UnionFind
+{
+private:
+    vi p;
+    int setSz;
+public:
+    UnionFind(int N)
+    {
+        p.assign(N, 0);
+        setSz = N;
+        for(int i = 0; i < N; i++)
+            p[i] = i;
+    }
+    int findSet(int u)
+    {
+        return (p[u] == u) ? u : (p[u] = findSet(p[u]));
+    }
+    bool isSameSet(int u, int v)
+    {
+        return findSet(u) == findSet(v);
+    }
+    void unionset(int u, int v)
+    {
+        if(!isSameSet(u, v))
+        {
+            setSz--;
+            int pu = findSet(u);
+            int pv = findSet(v);
+            p[pu] = pv;
+        }
+    }
+    int numDisjointSets()
+    {
+        return setSz;
+    }
+
+};
+
+int main()
+{
+    UnionFind UF(5);
+    UF.unionset(0, 1);
+    UF.unionset(2, 3);
+    UF.unionset(4, 3);
+    printf("isSameSet(0, 3) = %d\n", UF.isSameSet(0, 3)); // will return 0 (false)
+    printf("isSameSet(4, 3) = %d\n", UF.isSameSet(4, 3)); // will return 1 (true)
+    printf("Size of set : %d\n", UF.numDisjointSets()); // will return 1 (true)
+
+    return 0;
+}
