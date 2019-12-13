@@ -37,10 +37,10 @@ bool onSegment(Point p, Point q, Point r)
 
 int orientation(Point p, Point q, Point r)
 {
-    int ans = (p.x*q.y + q.x*r.y + r.x*p.y)-
-              (q.x*p.x + r.x*q.y + p.x*r.y);
-    if(ans == 0) return 0; //co linear
-    return (ans > 0) ? 1 : 2; // clockwise or counter clockwise
+	int val = (q.y - p.y) * (r.x - q.x) -
+			(q.x - p.x) * (r.y - q.y);
+	if (val == 0) return 0;
+	return (val > 0)? 1: 2;
 }
 
 bool isIntersect(Point p1, Point q1, Point p2, Point q2)
